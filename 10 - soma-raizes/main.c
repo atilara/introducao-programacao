@@ -4,7 +4,7 @@
 int main(void) {
 	int n, i;
 	float soma = 0;
-  	printf("Informe o número 'n': ");
+	printf("Informe o número 'n': ");
 	scanf("%i", &n);
 	while (n < 0) {
 		printf("Informe um número positivo para 'n': ");
@@ -14,5 +14,5 @@ int main(void) {
 	  soma += sqrt(i);
 	}
 	printf("O resultado da soma das raízes é: %.2f", soma);
-  return 0;
+    return 0;
 }

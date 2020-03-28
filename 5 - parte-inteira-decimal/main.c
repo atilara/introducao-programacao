@@ -3,7 +3,7 @@
 int main(void) {
 	float numero, parteDecimal;
 	int parteInteira;
-  	printf("Informe o número: ");
+	printf("Informe o número: ");
 	scanf("%f", &numero);
 	parteInteira = numero;
 	parteDecimal = numero - parteInteira;
