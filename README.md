@@ -1,5 +1,5 @@
 # Introdução a programação
-Exercícios respondidos em C durante a cadeira de introdução a programação.
+Exercícios respondidos durante a cadeira de introdução a programação.
 
 1. Crie um programa que imprima todos os valores pares de 1 a 1000 (1000 incluso)
 
@@ -28,3 +28,15 @@ Exercícios respondidos em C durante a cadeira de introdução a programação.
 13. Um ano é considerado bissexto quando é um múltiplo de 4, mas não é múltiplo de 100, a menos que seja múltiplo de 400. Escreva um programa que receba um número inteiro positivo e verifique se esse ano é ou não considerado bissexto.
 
 14. Faça um programa que leia os 3 valores dos lados de um triângulo (float), em seguida mostre na tela se com esses valores é possível formar um triângulo e, caso forme, mostre também se ele é isósceles, equilátero ou normal.
+
+15. Faça um programa que primeiramente leia um inteiro positivo N relativo à ordem de uma matriz quadrada. Em seguida entre em um menu com as opções:
+  - Mostrar matriz
+  - Mostrar diagonal principal
+  - Mostrar matriz triangular superior
+  - Mostrar matriz triangular inferior
+  - Sair
+<br>
+Os elementos da matriz serão suas posições, exemplo de matriz N=3:
+(0-0) (0-1) (0-2)
+(1-0) (1-1) (1-2)
+(2-0) (2-1) (2-2)
