@@ -2,15 +2,15 @@
 
 int main(void) {
 
-	int valores[2];
+	int valores[3];
 	int i, maiorValor, menorValor;
-	for(i = 0; i<=2; i++) {
+	for(i = 0; i<3; i++) {
 		printf("Informe o %iº valor: ", i+1);
 		scanf("%i", &valores[i]);
 	}
 	maiorValor = valores[0];
 	menorValor = valores[0];
-	for(i = 0; i<=2; i++) {
+	for(i = 0; i<3; i++) {
 		if (valores[i] < menorValor) {
 			menorValor = valores[i];
 		} else if (valores[i] > maiorValor) {
