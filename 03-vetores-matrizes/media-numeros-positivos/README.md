@@ -1,0 +1,1 @@
+Faça um programa que receba um inteiro N positivo, depois leia N valores float e em seguida imprima a média aritmética dos valores POSITIVOS.

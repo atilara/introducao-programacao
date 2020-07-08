@@ -1,0 +1,1 @@
+O usuario entra com 4 notas e com o peso de cada uma delas, o programa deve calcular a média do aluno e deverá mostrar o resultado. Alunos com nota acima de 7 são aprovados, aqueles que ficaram acima de 5 mas abaixo de 7 devem fazer uma prova de recuperação e o resto é reprovado.

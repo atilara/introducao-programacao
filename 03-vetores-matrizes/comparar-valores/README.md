@@ -1,0 +1,1 @@
+Faça um programa que leia 3 inteiros e imprima na tela o maior e o menor entre eles e em seguida imprima o maior em módulo e o menor em módulo.

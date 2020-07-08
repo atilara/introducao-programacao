@@ -1,0 +1,1 @@
+Escreva um programa que receba um inteiro N e calcule a soma das raízes de 1 até N (incluso N). Note que o programa deve garantir que N não seja um valor negativo.

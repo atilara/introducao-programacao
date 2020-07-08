@@ -1,0 +1,1 @@
+Crie um programa que receba dois inteiros N e M e que imprima todos os números de 0 até M (incluso) com N elementos por linha

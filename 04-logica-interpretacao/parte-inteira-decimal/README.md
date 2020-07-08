@@ -1,0 +1,1 @@
+Faça um programa que leia um float e mostre sua parte inteira e decimal separadas. (Ignore erros de arredondamento de pontos flutuantes). 

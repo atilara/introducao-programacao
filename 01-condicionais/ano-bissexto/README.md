@@ -1,0 +1,1 @@
+Um ano é considerado bissexto quando é um múltiplo de 4, mas não é múltiplo de 100, a menos que seja múltiplo de 400. Escreva um programa que receba um número inteiro positivo e verifique se esse ano é ou não considerado bissexto.

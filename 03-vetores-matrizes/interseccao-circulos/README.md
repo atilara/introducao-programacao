@@ -1,0 +1,1 @@
+Crie um programa que leia a posição e raio de dois círculos (x1, y1, r1, x2, y2, r2) (floats) escreva na tela se esses círculos possuem ou não uma interseção.

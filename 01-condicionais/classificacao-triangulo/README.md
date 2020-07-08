@@ -1,0 +1,1 @@
+Faça um programa que leia os 3 valores dos lados de um triângulo (float), em seguida mostre na tela se com esses valores é possível formar um triângulo e, caso forme, mostre também se ele é isósceles, equilátero ou normal.
