@@ -1,9 +1,4 @@
 #include <stdio.h>
-#include <math.h>
-
-/* 
-Faça um programa que receba um inteiro e determine se ele é primo.
-*/
 
 int main(void) {
 	int num, i, restoZero = 0;
