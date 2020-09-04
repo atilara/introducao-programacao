@@ -15,6 +15,7 @@ Exercícios respondidos como treino para a cadeira de introdução a programaç�
     - For
 - Vetores e matrizes
 - Quarta pasta envolve e põe a interpretação dos problemas como principal problema
+- Strings
 
 ## 🧩 Como contribuir
 
