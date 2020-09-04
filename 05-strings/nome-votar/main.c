@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 int main() {
-    char name[20];
+    char name[40];
     int age;
     printf("Informe seu nome: ");
-    scanf("%s", name);
+    fgets(name, 40, stdin);
     printf("Informe sua idade: ");
     scanf("%i", &age);
     if (age < 18) {
