@@ -1,0 +1,1 @@
+Crie um programa que compara duas strings. Imprima ‘É igual’, se o valor das duas strings for igual. Caso contrário, imprima “Nao é igual”.
