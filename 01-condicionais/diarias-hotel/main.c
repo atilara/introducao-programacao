@@ -14,7 +14,7 @@ float priceToPay(int number) {
     return price = (number * 50) + price;
 }
 
-int readPositiveValue(int number) {
+int readPositiveValue() {
     while (numberDays < 0) {
         printf("Informe um valor válido: ");
         scanf("%i", &numberDays);
@@ -25,7 +25,7 @@ int readPositiveValue(int number) {
 int main() {
     printf("Informe a quantidade de diárias: ");
     scanf("%i", &numberDays);
-    readPositiveValue(numberDays);
+    readPositiveValue();
     priceToPay(numberDays);
     printf("R$ %.2f", price);
     return 0;
