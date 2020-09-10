@@ -15,6 +15,7 @@ Exercícios respondidos como treino para a cadeira de introdução a programaç�
     - For
 - Vetores e matrizes
 - Strings
+- Structs
 
 ## 🧩 Como contribuir
 
