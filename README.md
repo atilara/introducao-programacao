@@ -17,6 +17,7 @@ Exercícios respondidos como treino para a cadeira de introdução a programaç�
 - Strings
 - Structs
 - Ponteiros
+- Games
 
 ## 🧩 Como contribuir
 
