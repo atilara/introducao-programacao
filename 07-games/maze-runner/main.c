@@ -17,7 +17,7 @@ typedef struct {
 }map;
 
 typedef struct {
-    int health;
+    int health, isBlocked;
     location playerLocation; 
 }player;
 
@@ -28,8 +28,10 @@ int game = 0;
 // Declaring functions
 void fillMap();
 void printMap();
+void printInstructions();
 int firstToPlay();
 int movePlayer();
+int isGameOver();
 int dice();
 void clearScreen();
 
@@ -38,21 +40,13 @@ int main() {
     // Initial HP
     playerOne.health = 10;
     playerTwo.health = 10;
+    playerTwo.isBlocked = 0;
+    playerTwo.isBlocked = 0;
     // Created to generate random numbers
     srand(time(NULL));
     
     printf("\nBem-vindo ao The Maze Runner!");
     Sleep(1500);
-
-    printf("\nInstruções do Jogo:");
-    printf("\n\nA célula branca (W) é um espaço neutro onde não há ação sobre o jogador");
-    printf("\nA célula vermelha (R) penaliza o jogador em 3 pontos de vida");
-    printf("\nA célula verde (G) recupera 1 ponto de vida do jogador");
-    printf("\nA célula amarela (Y) aprisiona o jogador por um turno sem jogar");
-    printf("\nA célula azul (B) permite que o jogador jogue novamente");
-    printf("\nA célula preta (L) faz o jogador voltar para o início");
-    
-    Sleep(5000);
 
     printf("\n\nDescobrindo qual será o primeiro jogador, jogando dados...");
     int turn = firstToPlay();
@@ -60,20 +54,82 @@ int main() {
     Sleep(1500);
 
     printf("\nO primeiro a jogar é o Player %i", turn);
-    Sleep(1500);
+
+    printf("\n\nPressionem ENTER para começar!!!");
+    getchar();
+
     clearScreen();
 
     fillMap();
+    printInstructions();
     do {
+        if (turn == 1 && playerOne.isBlocked == 1) {
+            turn = 2;
+            playerOne.isBlocked = 0;
+        } else if (turn == 2 && playerTwo.isBlocked == 1) {
+            turn = 1;
+            playerTwo.isBlocked = 0;
+        }
         printMap();
-        printf("Aperte Enter para lançar o dado");
+        printf("\nSaúde do Player 1: %i\nSaúde do Player 2: %i\n\n", playerOne.health, playerTwo.health);
+        printf("Jogador %i, aperte Enter para lançar o dado", turn);
         getchar();
         int moves = dice();
         printf("\nVocê lançou o dado e tirou: %i\n\nAperte Enter para continuar", moves);
         getchar();
-        movePlayer(turn == 1 ? playerOne : playerTwo, moves);
         clearScreen();
+        printInstructions();
+        int square = movePlayer(turn == 1 ? playerOne : playerTwo, moves, turn);
+
+        if (square == 1) {
+            printf("Jogador %i, você caiu na casa branca! Nada aconteceu!\n\n", turn);
+        } else if (square == 2) {
+            printf("Jogador %i, você caiu na casa vermelha! Perdeu 3 de vida!\n\n", turn);
+            if (turn == 1) playerOne.health = playerOne.health < 3 ? 0 : playerOne.health - 3;
+            else playerTwo.health = playerTwo.health < 3 ? 0 : playerTwo.health - 3;
+        } else if (square == 3) {
+            if (turn == 1 && playerOne.health != 10) {
+                printf("Jogador %i, você caiu na casa verde! Recuperou 1 de vida!\n\n", turn);
+                playerOne.health += 1;
+            } 
+            else if (playerTwo.health != 10) {
+                printf("Jogador %i, você caiu na casa verde! Recuperou 1 de vida!\n\n", turn);
+                playerTwo.health += 1;
+            } else {
+                printf("Jogador %i, você caiu na casa verde! Porém sua vida já estava cheia!\n\n", turn);
+            }
+        } else if (square == 4) {
+            printf("Jogador %i, você caiu na casa azul! Jogue novamente!\n\n", turn);
+            continue;
+        } else if (square == 5) {
+            printf("Jogador %i, você caiu na casa amarela! Uma rodada sem jogar!\n\n", turn);
+            if (turn == 1) {
+                playerOne.isBlocked = 1;
+            }
+            else if (turn == 2) {
+                playerTwo.isBlocked = 1;
+            }
+        } else if (square == 6) {
+            printf("Jogador %i, você caiu na casa preta! Volte para o início!\n\n", turn);
+            if (turn == 1) {
+                playerOne.playerLocation.x = 0;
+                playerOne.playerLocation.y = 0;
+            } else if (turn == 2) {
+                playerTwo.playerLocation.x = 0;
+                playerTwo.playerLocation.y = 0;
+            } 
+        }
+        game = isGameOver();
+        turn = turn == 1 ? 2 : 1;
     } while (game == 0);
+
+    clearScreen();
+
+    if (game == 1) {
+        printf("O jogador 1 venceu!!!");
+    } else {
+        printf("O jogador 2 venceu!!!");
+    }
 }
 // Other functions
 void fillMap() {
@@ -131,9 +187,17 @@ void printMap() {
     int i, j;
     for (i = 0; i < 7; i++) {
         for (j = 0; j < 10; j++) {
+            int isPlayer1InSquare = 0;
+            int isPlayer2InSquare = 0;
+
+            if ( i == playerOne.playerLocation.x && j == playerOne.playerLocation.y ) isPlayer1InSquare = 1;
+            if ( i == playerTwo.playerLocation.x && j == playerTwo.playerLocation.y ) isPlayer2InSquare = 1;
             
             int place = board.spaces[i][j];
-            if (place == -1) printf("I ");
+            if ( isPlayer1InSquare && isPlayer2InSquare ) printf("P ");
+            else if ( isPlayer1InSquare ) printf("1 ");
+            else if ( isPlayer2InSquare ) printf("2 ");
+            else if (place == -1) printf("I ");
             else if (place == 1) printf("W ");
             else if (place == 2) printf("R ");
             else if (place == 3) printf("G ");
@@ -145,7 +209,19 @@ void printMap() {
         }
         printf("\n");
     }
-    printf("\nSaúde do Player 1: %i\nSaúde do Player 2: %i\n\n", playerOne.health, playerTwo.health);
+}
+
+void printInstructions() {
+    printf("\nInstruções do Jogo:");
+    printf("\n\nW = é um espaço neutro onde não há ação sobre o jogador");
+    printf("\nR = penaliza o jogador em 3 pontos de vida");
+    printf("\nG = recupera 1 ponto de vida do jogador");
+    printf("\nY = aprisiona o jogador por um turno sem jogar");
+    printf("\nB = permite que o jogador jogue novamente");
+    printf("\nL = faz o jogador voltar para o início");
+    printf("\nI = início do tabuleiro");
+    printf("\nE = final do tabuleiro");
+    printf("\nP = jogadores na mesma posição\n\n");
 }
 
 int firstToPlay() {
@@ -162,34 +238,55 @@ int firstToPlay() {
 }
 
 // Retorna o número correspondente a cada tipo de espaço no tabuleiro que o player cair
-int movePlayer(player player, int moves) {
-    
-    int currentX = player.playerLocation.x;
-    int currentY = player.playerLocation.y;
+int movePlayer(player Player, int moves, int turn) {
+
+    int currentX = Player.playerLocation.x;
+    int currentY = Player.playerLocation.y;
 
     int i;
     for (i = 0; i < moves; i++) {
         //  Right
-        if (currentX == 0 && currentY < 10) {
-            player.playerLocation.y++;
+        if (currentX == 0 && currentY < 9) {
+            if ( turn == 1 ) playerOne.playerLocation.y += 1;
+            else if ( turn == 2 ) playerTwo.playerLocation.y += 1;
+            currentY++;
         } 
         // Down
         else if (currentX < 6 && currentY == 9) {
-            player.playerLocation.x++;
+            if ( turn == 1 ) playerOne.playerLocation.x += 1;
+            else if ( turn == 2 ) playerTwo.playerLocation.x += 1;
+            currentX++;
         }
         // Left
         else if (currentX == 6 && currentY > 0) {
-            player.playerLocation.y--;
-
+            if ( turn == 1 ) playerOne.playerLocation.y -= 1;
+            else if ( turn == 2 ) playerTwo.playerLocation.y -= 1;
+            currentY--;
         }
         // Up
         else if (currentX > 3 && currentY == 0) {
-            player.playerLocation.x--;
+            if ( turn == 1 ) playerOne.playerLocation.x -= 1;
+            else if ( turn == 2 ) playerTwo.playerLocation.x -= 1;
+            currentX--;
         }
     }
-    int currentLocation = board.spaces[player.playerLocation.x][player.playerLocation.y];
+
+    int currentLocation = board.spaces[currentX][currentY];
     
     return currentLocation;
+}
+
+int isGameOver() {
+    if (playerOne.health == 0) {
+        return 2;
+    } else if (playerTwo.health == 0) {
+        return 1;
+    } else if (playerOne.playerLocation.x == 3 && playerOne.playerLocation.y == 0) {
+        return 1;
+    } else if (playerTwo.playerLocation.x == 3 && playerTwo.playerLocation.y == 0) {
+        return 2;
+    } 
+    return 0;
 }
 
 int dice() {
