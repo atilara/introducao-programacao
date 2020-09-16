@@ -63,6 +63,7 @@ int main() {
     fillMap();
     printInstructions();
     do {
+        // Verifica se o jogador está proibido de jogar
         if (turn == 1 && playerOne.isBlocked == 1) {
             turn = 2;
             playerOne.isBlocked = 0;
@@ -83,12 +84,15 @@ int main() {
 
         // Eventos responsáveis pela funcionalidade de cada cor
         if (square == 1) {
+            // Casa branca
             printf("Jogador %i, você caiu na casa branca! Nada aconteceu!\n\n", turn);
         } else if (square == 2) {
+            // Casa vermelha
             printf("Jogador %i, você caiu na casa vermelha! Perdeu 3 de vida!\n\n", turn);
             if (turn == 1) playerOne.health = playerOne.health < 3 ? 0 : playerOne.health - 3;
             else playerTwo.health = playerTwo.health < 3 ? 0 : playerTwo.health - 3;
         } else if (square == 3) {
+            // Casa verde, verifica se a saúde não está no máximo
             if (turn == 1 && playerOne.health != 10) {
                 printf("Jogador %i, você caiu na casa verde! Recuperou 1 de vida!\n\n", turn);
                 playerOne.health += 1;
@@ -100,9 +104,11 @@ int main() {
                 printf("Jogador %i, você caiu na casa verde! Porém sua vida já estava cheia!\n\n", turn);
             }
         } else if (square == 4) {
+            // Casa azul, quebra o loop para o jogador jogar duas vezes
             printf("Jogador %i, você caiu na casa azul! Jogue novamente!\n\n", turn);
             continue;
         } else if (square == 5) {
+            // Casa amarela, faz com que o jogador que jogou fique bloqueado 
             printf("Jogador %i, você caiu na casa amarela! Uma rodada sem jogar!\n\n", turn);
             if (turn == 1) {
                 playerOne.isBlocked = 1;
@@ -111,6 +117,7 @@ int main() {
                 playerTwo.isBlocked = 1;
             }
         } else if (square == 6) {
+            // Casa preta, transporta o jogador para o início do game
             printf("Jogador %i, você caiu na casa preta! Volte para o início!\n\n", turn);
             if (turn == 1) {
                 playerOne.playerLocation.x = 0;
@@ -120,12 +127,15 @@ int main() {
                 playerTwo.playerLocation.y = 0;
             } 
         }
+        // Verifica se o jogo acabou a cada turno
         game = isGameOver();
+        // Troca de quem é a vez ao fim de cada turno
         turn = turn == 1 ? 2 : 1;
     } while (game == 0);
 
     clearScreen();
 
+    // Verifica o valor retornado por isGameOver para imprimir a mensagem correta
     if (game == 1)
         printf("O jogador 2 venceu! \n\nA vida do jogador 1 chegou ao fim!");
     else if (game == 2)
@@ -197,6 +207,8 @@ void printMap() {
             if ( i == playerOne.playerLocation.x && j == playerOne.playerLocation.y ) isPlayer1InSquare = 1;
             if ( i == playerTwo.playerLocation.x && j == playerTwo.playerLocation.y ) isPlayer2InSquare = 1;
             
+            // Imprime os caracteres especiais no lugar dos números, verificando os valores
+            // setados durante a execução da função fill map
             int place = board.spaces[i][j];
             if ( isPlayer1InSquare && isPlayer2InSquare ) printf("P ");
             else if ( isPlayer1InSquare ) printf("1 ");
@@ -215,6 +227,7 @@ void printMap() {
     }
 }
 
+// Instruções do jogo
 void printInstructions() {
     printf("\nInstruções do Jogo:");
     printf("\n\nW = é um espaço neutro onde não há ação sobre o jogador");
@@ -228,8 +241,11 @@ void printInstructions() {
     printf("\nP = jogadores na mesma posição\n\n");
 }
 
+// Primeiro a jogar
 int firstToPlay() {
     int playerOneAttempt = 0, playerTwoAttempt = 0;
+    // Joga dois dados para cada jogador e verifica quem tirou o maior valor,
+    // rodando o loop até que um valor seja diferente do outro
     while (playerOneAttempt == playerTwoAttempt) {
         playerOneAttempt = dice() + dice();
         playerTwoAttempt = dice() + dice();
@@ -248,26 +264,28 @@ int movePlayer(player Player, int moves, int turn) {
     int currentY = Player.playerLocation.y;
 
     int i;
+    // Roda o número de vezes que foi tirado no dado, verificando de quem é a vez e alterando
+    // a posição do jogador
     for (i = 0; i < moves; i++) {
-        //  Right
+        //  Direita, se ele estiver primeira linha até chegar na última coluna 
         if (currentX == 0 && currentY < 9) {
             if ( turn == 1 ) playerOne.playerLocation.y += 1;
             else if ( turn == 2 ) playerTwo.playerLocation.y += 1;
             currentY++;
         } 
-        // Down
+        // Baixo, se ele estiver na última coluna até chegar na última linha
         else if (currentX < 6 && currentY == 9) {
             if ( turn == 1 ) playerOne.playerLocation.x += 1;
             else if ( turn == 2 ) playerTwo.playerLocation.x += 1;
             currentX++;
         }
-        // Left
+        // Esquerda, se ele estiver na última linha até chegar na primeira coluna
         else if (currentX == 6 && currentY > 0) {
             if ( turn == 1 ) playerOne.playerLocation.y -= 1;
             else if ( turn == 2 ) playerTwo.playerLocation.y -= 1;
             currentY--;
         }
-        // Up
+        // Cima, se ele estiver na primeira coluna até chegar na terceira linha
         else if (currentX > 3 && currentY == 0) {
             if ( turn == 1 ) playerOne.playerLocation.x -= 1;
             else if ( turn == 2 ) playerTwo.playerLocation.x -= 1;
@@ -277,9 +295,11 @@ int movePlayer(player Player, int moves, int turn) {
 
     int currentLocation = board.spaces[currentX][currentY];
     
+    // Retorna a posição atual para verificar que evento acontecererá com o jogador
     return currentLocation;
 }
 
+// Retorna se o jogo acabou e qual foi a razão do fim do jogo
 int isGameOver() {
     if (playerOne.health == 0) {
         return 1;
@@ -293,10 +313,12 @@ int isGameOver() {
     return 0;
 }
 
+// Retorna um valor aleatório
 int dice() {
     return 1 + (rand() % 6);
 }
 
+// Limpa tela
 void clearScreen() {
     #ifdef _WIN32
         system("cls");
