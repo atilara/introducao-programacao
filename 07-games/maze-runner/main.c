@@ -53,7 +53,7 @@ int main() {
 
     Sleep(1500);
 
-    printf("\nO primeiro a jogar é o Player %i", turn);
+    printf("\n\nO primeiro a jogar é o Jogador %i", turn);
 
     printf("\n\nPressionem ENTER para começar!!!");
     getchar();
@@ -71,16 +71,17 @@ int main() {
             playerTwo.isBlocked = 0;
         }
         printMap();
-        printf("\nSaúde do Player 1: %i\nSaúde do Player 2: %i\n\n", playerOne.health, playerTwo.health);
-        printf("Jogador %i, aperte Enter para lançar o dado", turn);
+        printf("\nSaúde do Jogador 1: %i\nSaúde do Jogador 2: %i\n\n", playerOne.health, playerTwo.health);
+        printf("Jogador %i, aperte ENTER para lançar o dado", turn);
         getchar();
         int moves = dice();
-        printf("\nVocê lançou o dado e tirou: %i\n\nAperte Enter para continuar", moves);
+        printf("\nVocê lançou o dado e tirou: %i\n\nAperte ENTER para continuar", moves);
         getchar();
         clearScreen();
         printInstructions();
         int square = movePlayer(turn == 1 ? playerOne : playerTwo, moves, turn);
 
+        // Eventos responsáveis pela funcionalidade de cada cor
         if (square == 1) {
             printf("Jogador %i, você caiu na casa branca! Nada aconteceu!\n\n", turn);
         } else if (square == 2) {
@@ -125,11 +126,14 @@ int main() {
 
     clearScreen();
 
-    if (game == 1) {
-        printf("O jogador 1 venceu!!!");
-    } else {
-        printf("O jogador 2 venceu!!!");
-    }
+    if (game == 1)
+        printf("O jogador 2 venceu! \n\nA vida do jogador 1 chegou ao fim!");
+    else if (game == 2)
+        printf("O jogador 1 venceu! \n\nA vida do jogador 2 chegou ao fim!");
+    else if (game == 3)
+        printf("O jogador 1 venceu! \n\nChegou ao fim do tabuleiro!");
+    else
+        printf("O jogador 2 venceu! \n\nChegou ao fim do tabuleiro!"); 
 }
 // Other functions
 void fillMap() {
@@ -278,13 +282,13 @@ int movePlayer(player Player, int moves, int turn) {
 
 int isGameOver() {
     if (playerOne.health == 0) {
-        return 2;
+        return 1;
     } else if (playerTwo.health == 0) {
-        return 1;
-    } else if (playerOne.playerLocation.x == 3 && playerOne.playerLocation.y == 0) {
-        return 1;
-    } else if (playerTwo.playerLocation.x == 3 && playerTwo.playerLocation.y == 0) {
         return 2;
+    } else if (playerOne.playerLocation.x == 3 && playerOne.playerLocation.y == 0) {
+        return 3;
+    } else if (playerTwo.playerLocation.x == 3 && playerTwo.playerLocation.y == 0) {
+        return 4;
     } 
     return 0;
 }
