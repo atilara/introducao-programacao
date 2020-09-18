@@ -28,6 +28,7 @@ int game = 0;
 // Declaring functions
 void fillMap();
 void printMap();
+void printIntro();
 void printInstructions();
 int firstToPlay();
 int movePlayer();
@@ -45,17 +46,20 @@ int main() {
     // Created to generate random numbers
     srand(time(NULL));
     
-    printf("\nBem-vindo ao The Maze Runner!");
-    Sleep(1500);
+    printIntro();
+    printf("\n\nPressione ENTER para começar!");
+    getchar();
+    
+    clearScreen();
 
-    printf("\n\nDescobrindo qual será o primeiro jogador, jogando dados...");
+    printf("\nDescobrindo qual será o primeiro jogador, jogando dados...");
     int turn = firstToPlay();
 
     Sleep(1500);
 
     printf("\n\nO primeiro a jogar é o Jogador %i", turn);
+    printf("\n\nPressionem ENTER para começar!");
 
-    printf("\n\nPressionem ENTER para começar!!!");
     getchar();
 
     clearScreen();
@@ -227,9 +231,20 @@ void printMap() {
     }
 }
 
+void printIntro() {
+    printf("\n██████████████████████████████████████████████████████████████████████");
+    Sleep(500);
+    printf("\n█▄─▀█▀─▄██▀▄─██░▄▄░▄█▄─▄▄─███▄─▄▄▀█▄─██─▄█▄─▀█▄─▄█▄─▀█▄─▄█▄─▄▄─█▄─▄▄▀█");
+    Sleep(500);
+    printf("\n██─█▄█─███─▀─███▀▄█▀██─▄█▀████─▄─▄██─██─███─█▄▀─███─█▄▀─███─▄█▀██─▄─▄█");
+    Sleep(500);
+    printf("\n▀▄▄▄▀▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▄▄▄▀▀▀▄▄▀▄▄▀▀▄▄▄▄▀▀▄▄▄▀▀▄▄▀▄▄▄▀▀▄▄▀▄▄▄▄▄▀▄▄▀▄▄▀");
+    Sleep(500);
+}
+
 // Instruções do jogo
 void printInstructions() {
-    printf("\nInstruções do Jogo:");
+    printf("Instruções do Jogo:");
     printf("\n\nW = é um espaço neutro onde não há ação sobre o jogador");
     printf("\nR = penaliza o jogador em 3 pontos de vida");
     printf("\nG = recupera 1 ponto de vida do jogador");
