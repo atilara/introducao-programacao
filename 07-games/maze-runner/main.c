@@ -41,10 +41,11 @@ int main() {
     // Initial HP
     playerOne.health = 10;
     playerTwo.health = 10;
-    playerTwo.isBlocked = 0;
+    playerOne.isBlocked = 0;
     playerTwo.isBlocked = 0;
     // Created to generate random numbers
     srand(time(NULL));
+    clearScreen();
     
     printIntro();
     printf("\n\nPressione ENTER para começar!");
@@ -101,7 +102,7 @@ int main() {
                 printf("Jogador %i, você caiu na casa verde! Recuperou 1 de vida!\n\n", turn);
                 playerOne.health += 1;
             } 
-            else if (playerTwo.health != 10) {
+            else if (turn == 2 && playerTwo.health != 10) {
                 printf("Jogador %i, você caiu na casa verde! Recuperou 1 de vida!\n\n", turn);
                 playerTwo.health += 1;
             } else {
