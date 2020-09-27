@@ -20,6 +20,13 @@ Exercícios respondidos como treino para a cadeira de introdução a programaç�
 - Games
 - RayLib (interface gráfica)
 
+## 🤔 Como utilizar
+
+Para rodar códigos em C, é necessário:
+
+- Compilador de C
+- Editor de Texto / IDE de sua preferência
+
 ## 🧩 Como contribuir
 
 - Faça um `fork` do repositório
