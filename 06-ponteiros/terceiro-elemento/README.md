@@ -1,0 +1,1 @@
+Assumindo que `pulo[]` é um vetor do tipo `int`, qual expressão referencia o valor do terceiro elemento do vetor?
