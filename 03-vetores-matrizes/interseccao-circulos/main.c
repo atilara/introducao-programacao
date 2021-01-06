@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>  
 
 int main(void) {
     float x[2], y[2], r[2], pitagoras;
@@ -13,8 +14,8 @@ int main(void) {
     	scanf("%f", &r[i]);
 	}
     // realiza o cálculo do lado direito da inequação utilizando uma variável de apoio, o resto do cálculo é feito no if statement
-    pitagoras = ((x[1]-x[0])*(x[1]-x[0])) + ((y[1]-y[0])*(y[1]-y[0]));
-    if (((r[0]+r[1])*(r[0]+r[1])) >= pitagoras) {
+    pitagoras = (pow((x[1]-x[0]), 2)) + (pow((y[1]-y[0]),2));
+    if (pow((r[0]+r[1]), 2)) >= pitagoras) {
         printf("Existe uma intersecção");
     } else {
         printf("Não existe uma intersecção");
